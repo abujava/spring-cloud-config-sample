@@ -1,0 +1,18 @@
+### Encrypt Plain Text Using  Java Cryptography Extension (JCE)
+POST http://localhost:8888/encrypt
+Content-Type: text/plain
+
+thisisjwtsecretkeyfordev123
+
+### Decrype Text Using  Java Cryptography Extension (JCE)
+POST http://localhost:8888/decrypt
+Content-Type: text/plain
+
+f3d5c5eb486a093eeb9a60b18544e112b9c91bfcf5e9293ce9406abf952be731112264da6b358de945c0f62698d05801
+
+### Decrype Text Using  Java Cryptography Extension (JCE)
+GET http://localhost:8888/auth-properties/prod
+Content-Type: text/plain
+
+f3d5c5eb486a093eeb9a60b18544e112b9c91bfcf5e9293ce9406abf952be731112264da6b358de945c0f62698d05801
+

@@ -1,0 +1,27 @@
+encrypt:
+  key: sNUaSpV8H41ooYXBNXHSDfenU84r7vSz
+server:
+  port: 8888
+spring:
+  application:
+    name: CONFIG-SERVER
+  cloud:
+    config:
+      enabled: true
+      server:
+        git:
+          clone-on-start: true
+          default-label: main
+          refresh-rate: 3600
+          search-paths: '{application}'
+          uri: https://github.com/abujava/config-server-properties
+app:
+  clients:
+    - name: ORDER-SERVICE
+      path: /order-properties
+      username: orderServiceUsername
+      password: orderServicePassword
+    - name: AUTH-SERVICE
+      path: /auth-properties
+      username: authServiceUsername
+      password: authServicePassword
