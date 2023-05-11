@@ -2,9 +2,9 @@ spring:
   cloud:
     config:
       uri: http://localhost:8888
-      name: order-properties
+      name: auth-properties
       profile: ${spring.profiles.active}
       fail-fast: true
       label: main
-      username: orderServiceUsername
-      password: orderServicePassword
+      username: authServiceUsername
+      password: authServicePassword
