@@ -6,7 +6,7 @@ package com.abujava.configserver;
  * @author Muhammad Muminov
  * @since 5/23/2024
  */
-public class Clients {
+public class Client {
     private String name;
     private String path;
     private String username;
