@@ -20,7 +20,7 @@ public class Startup implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        String value = environment.getProperty("app.user.token-expiration-in-ms");
+        String value = environment.getProperty("app.refresh-time");
         System.out.println(value);
     }
 }

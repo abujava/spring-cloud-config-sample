@@ -4,8 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -52,23 +54,25 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .csrf()
-                .disable()
-                .httpBasic()
-                .and()
+        return http
+                .cors(AbstractHttpConfigurer::disable)
+                .csrf(AbstractHttpConfigurer::disable)
+                .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> {
                     auth
                             .requestMatchers(HttpMethod.POST, "/encrypt")
                             .permitAll();
-                    clientProperties.getClients().forEach(client -> auth.requestMatchers(HttpMethod.GET, client.getPathWithStartsWith()).access(new WebExpressionAuthorizationManager(client.getRole())));
+
+                    clientProperties.getClients()
+                            .forEach(client ->
+                                    auth.requestMatchers(HttpMethod.GET, client.getPathWithStartsWith()).access(new WebExpressionAuthorizationManager(client.getRole()))
+                            );
+
                     auth
                             .anyRequest()
                             .denyAll();
                 })
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
-        return http.build();
+                .httpBasic(Customizer.withDefaults())
+                .build();
     }
 }

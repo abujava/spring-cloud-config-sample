@@ -1,10 +1,6 @@
 package com.abujava.configserver;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -18,12 +14,19 @@ import java.util.stream.Collectors;
  * @author Muhammad Muminov
  * @since 5/10/2023
  */
-@Data
+
 @Component
 @ConfigurationProperties(prefix = "app")
 public class ClientProperties {
 
     private List<Client> clients = new ArrayList<>();
+
+    public ClientProperties() {
+    }
+
+    public ClientProperties(List<Client> clients) {
+        this.clients = clients;
+    }
 
     public Set<String> toPathSet() {
         return clients.stream().map(Client::getName).collect(Collectors.toSet());
@@ -37,19 +40,12 @@ public class ClientProperties {
         return pathArray;
     }
 
-    @Data
-    public static class Client {
-        private String name;
-        private String path;
-        private String username;
-        private String password;
 
-        public String getPathWithStartsWith() {
-            return path + "/**";
-        }
+    public List<Client> getClients() {
+        return clients;
+    }
 
-        public String getRole() {
-            return String.format("hasRole('%S')", name);
-        }
+    public void setClients(List<Client> clients) {
+        this.clients = clients;
     }
 }
